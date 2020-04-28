@@ -1,8 +1,7 @@
 import os
 import git
 import re
-
-
+import requests
 
 EXCLUDE_EXT = (
     "gitignore",
@@ -39,7 +38,7 @@ def extract_urls(folder="temp"):
                     url = url[:-1]
                 yield url, fname, lidx
 
-import requests
+
 def test_url_availability(url):
     try:
         with requests.get(url, timeout=10) as r:
@@ -49,12 +48,3 @@ def test_url_availability(url):
     except requests.exceptions.ConnectTimeout:
         return False
 
-
-os.makedirs("temp", exist_ok=True)
-# git.Repo.clone_from("https://github.com/mit-han-lab/proxylessnas.git", "temp")
-# git.Repo.clone_from("https://github.com/mit-han-lab/AMC.git", "temp")
-giturl = "https://github.com/mit-han-lab/AMC/blob/master/"
-for url, fname, lidx in extract_urls():
-    print(url)
-    print("\t", test_url_availability(url))
-    print("\t", "%s%s#L%d" % (giturl, fname.replace("temp/", ""), lidx + 1))
