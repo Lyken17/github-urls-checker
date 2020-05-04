@@ -6,7 +6,7 @@ Check whether a repo contains invalid urls.
 
 Clone the project and in the main folder
 
-```python
+```bash
 python main.py \
     --show-invalid-only \
     --url https://github.com/mit-han-lab/proxylessnas.git
