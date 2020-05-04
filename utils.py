@@ -1,4 +1,4 @@
-import os
+import os, os.path as osp
 import git
 import re
 import requests
@@ -16,7 +16,7 @@ def walk_folder(folder="temp"):
         dirs[:] = [d for d in dirs if d not in EXCLUDE_DIR]
 
         for filename in files:
-            fpath = subdir + os.sep + filename
+            fpath = osp.join(subdir, filename)
             if fpath.split(".")[-1] in EXCLUDE_EXT:
                 continue
             yield fpath
@@ -47,4 +47,3 @@ def test_url_availability(url):
             return False
     except requests.exceptions.ConnectTimeout:
         return False
-
