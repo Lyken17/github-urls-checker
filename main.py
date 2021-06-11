@@ -20,7 +20,8 @@ if __name__ == '__main__':
     if url.endswith(".git"):
         url = url[:-4]
     giturl = osp.join(url, "blob/master")
-    shutil.rmtree("temp/")
+    if osp.exists("temp/"):
+        shutil.rmtree("temp/")
     git.Repo.clone_from(url, "temp")
 
     from utils import extract_urls, test_url_availability
@@ -33,3 +34,6 @@ if __name__ == '__main__':
         print("[%s]" % status, url)
         rel_path = "/".join(fname.split("/")[1:])
         print("\t", "It is in %s#L%d" % (osp.join(giturl, rel_path) , lidx + 1))
+        
+    if osp.exists("temp/"):
+        shutil.rmtree("temp/")
